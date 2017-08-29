@@ -26,7 +26,7 @@ public class BookRepository {
     }
 
     @Transactional
-    public void getRegisterBook(Book book) {
+    public void registerBook(Book book) {
         em.persist(book);
     }
 }

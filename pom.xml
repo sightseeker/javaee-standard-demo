@@ -11,14 +11,25 @@
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <glassfish.version>5.0</glassfish.version>
+        <integration.container.id>glassfish4x</integration.container.id>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>jvnet-nexus-promoted</id>
+            <url>https://maven.java.net/content/groups/promoted/</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
             <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-            <version>7.0</version>
+            <artifactId>javaee-api</artifactId>
+            <version>8.0-b22</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -31,6 +42,15 @@
 
     <build>
         <finalName>javaee-standard-demo</finalName>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.cargo</groupId>
+                    <artifactId>cargo-maven2-plugin</artifactId>
+                    <version>1.4.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -53,25 +73,42 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.glassfish.maven.plugin</groupId>
-                <artifactId>maven-glassfish-plugin</artifactId>
-                <version>2.1</version>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.4.5</version>
                 <configuration>
-                    <glassfishDirectory>/Users/0073001557/git/jeeserver/glassfish5pb/glassfish</glassfishDirectory>
-                    <user>admin</user>
-                    <adminPassword>glassfish</adminPassword>
-                    <domain>
-                        <name>domain1</name>
-                        <httpPort>8080</httpPort>
-                        <adminPort>4848</adminPort>
-                    </domain>
-                    <components>
-                        <component>
-                            <name>${project.artifactId}</name>
-                            <artifact>target/${project.build.finalName}.war</artifact>
-                        </component>
-                    </components>
+                    <container>
+                        <containerId>glassfish4x</containerId>
+                        <type>remote</type>
+                    </container>
+                    <configuration>
+                        <type>runtime</type>
+                        <properties>
+                            <cargo.hostname>localhost</cargo.hostname>
+                            <cargo.remote.username>admin</cargo.remote.username>
+                            <cargo.remote.password>glassfish</cargo.remote.password>
+                            <cargo.remote.port>4848</cargo.remote.port>
+                            <cargo.glassfish.domain.name>domain1</cargo.glassfish.domain.name>
+                        </properties>
+                    </configuration>
+                    <deployables>
+                        <deployable>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>${project.artifactId}</artifactId>
+                            <type>war</type>
+                            <properties>
+                                <context>${project.name}</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.glassfish.deployment</groupId>
+                        <artifactId>deployment-client</artifactId>
+                        <version>3.2-b06</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <groupId>com.fizzed</groupId>
@@ -85,7 +122,7 @@
                     <goals>
                         <param>clean</param>
                         <param>package</param>
-                        <param>glassfish:redeploy</param>
+                        <param>cargo:redeploy</param>
                     </goals>
                     <profiles>
                         <param>optional-profile-to-activate-while-running-goals</param>
