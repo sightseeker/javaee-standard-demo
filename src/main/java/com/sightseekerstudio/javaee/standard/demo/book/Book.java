@@ -1,7 +1,4 @@
-/*
- * (C) Sony Network Communications Inc. All Rights reserved.
- */
-package com.sightseekerstudio.javaee.standard.demo;
+package com.sightseekerstudio.javaee.standard.demo.book;
 
 import java.io.Serializable;
 import javax.persistence.Entity;

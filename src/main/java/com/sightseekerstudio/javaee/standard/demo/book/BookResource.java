@@ -1,7 +1,4 @@
-/*
- * (C) Sony Network Communications Inc. All Rights reserved.
- */
-package com.sightseekerstudio.javaee.standard.demo;
+package com.sightseekerstudio.javaee.standard.demo.book;
 
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
