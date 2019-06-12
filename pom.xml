@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.sightseekerstudio</groupId>
@@ -29,7 +30,7 @@
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
-            <version>8.0-b22</version>
+            <version>8.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -42,93 +43,7 @@
 
     <build>
         <finalName>javaee-standard-demo</finalName>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.codehaus.cargo</groupId>
-                    <artifactId>cargo-maven2-plugin</artifactId>
-                    <version>1.4.0</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.1</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <compilerArguments>
-                        <endorseddirs>${endorsed.dir}</endorseddirs>
-                    </compilerArguments>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>3.1.0</version>
-                <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.cargo</groupId>
-                <artifactId>cargo-maven2-plugin</artifactId>
-                <version>1.4.5</version>
-                <configuration>
-                    <container>
-                        <containerId>glassfish4x</containerId>
-                        <type>remote</type>
-                    </container>
-                    <configuration>
-                        <type>runtime</type>
-                        <properties>
-                            <cargo.hostname>localhost</cargo.hostname>
-                            <cargo.remote.username>admin</cargo.remote.username>
-                            <cargo.remote.password>glassfish</cargo.remote.password>
-                            <cargo.remote.port>4848</cargo.remote.port>
-                            <cargo.glassfish.domain.name>domain1</cargo.glassfish.domain.name>
-                        </properties>
-                    </configuration>
-                    <deployables>
-                        <deployable>
-                            <groupId>${project.groupId}</groupId>
-                            <artifactId>${project.artifactId}</artifactId>
-                            <type>war</type>
-                            <properties>
-                                <context>${project.name}</context>
-                            </properties>
-                        </deployable>
-                    </deployables>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.glassfish.deployment</groupId>
-                        <artifactId>deployment-client</artifactId>
-                        <version>3.2-b06</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-            <plugin>
-                <groupId>com.fizzed</groupId>
-                <artifactId>fizzed-watcher-maven-plugin</artifactId>
-                <version>1.0.4</version>
-                <configuration>
-                    <files>
-                        <param>src/main/java</param>
-                        <param>src/main/resources</param>
-                    </files>
-                    <goals>
-                        <param>clean</param>
-                        <param>package</param>
-                        <param>cargo:redeploy</param>
-                    </goals>
-                    <profiles>
-                        <param>optional-profile-to-activate-while-running-goals</param>
-                    </profiles>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 

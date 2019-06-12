@@ -1,0 +1,9 @@
+version: '2.4'
+services:
+  app:
+     image: jboss/wildfly:16.0.0.Final
+     container_name: app
+     ports:
+       - 8080:8080
+     volumes:
+       - ./:/app
